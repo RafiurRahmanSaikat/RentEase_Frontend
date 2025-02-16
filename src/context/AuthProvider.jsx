@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { backEndApi } from "../constants";
+import UploadImage from "../utils/UploadImage";
 import AuthContext from "./AuthContext";
 
 const AuthProvider = ({ children }) => {
@@ -82,25 +83,6 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const uploadImageToImgBB = async (imageFile) => {
-    const imgbbApiKey = "1852d1780a7c1d17aff8afe66b4878a8";
-    const formData = new FormData();
-    formData.append("image", imageFile);
-
-    try {
-      setLoading(true);
-      const response = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${imgbbApiKey}`,
-        formData,
-      );
-      return response.data.data.url;
-    } catch (error) {
-      toast.error("Failed to upload image. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const SignUp = async (formData) => {
     try {
       setLoading(true);
@@ -109,7 +91,7 @@ const AuthProvider = ({ children }) => {
 
       let imageUrl = "";
       if (formData.image) {
-        imageUrl = await uploadImageToImgBB(formData.image);
+        imageUrl = await UploadImage(formData.image);
       }
 
       const signUpData = {
@@ -153,7 +135,6 @@ const AuthProvider = ({ children }) => {
         SignUp,
         Login,
         LogOut,
-        uploadImageToImgBB,
       }}
     >
       {children}
