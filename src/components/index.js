@@ -2,7 +2,6 @@ export { default as Favorites } from "../components/Dashboard/components/Favorit
 export { default as Profile } from "../components/Dashboard/components/Profile";
 export { default as RentRequest } from "../components/Dashboard/components/RentRequest";
 export { default as Dashboard } from "../components/Dashboard/Dashboard";
-export { default as Home } from "../components/home/Home";
 export { default as HouseDetails } from "../components/House/HouseDetail";
 export { default as DotBackground } from "../components/ui/background/DotBackground";
 export { default as NoisyGridPattern } from "../components/ui/background/NoisyGridPattern";
@@ -17,6 +16,7 @@ export { default as RootLayout } from "../layout/RootLayout";
 export { default as Private } from "../router/PrivateRoute";
 export { default as Advertisement } from "./Advertisement/Advertisement";
 export { default as AuthComponent } from "./Authentication/AuthComponent";
+export { default as Home } from "./Home/Home";
 export { default as CompactReviewCard } from "./ui/cards/CompactReviewCard";
 export { default as HouseCard } from "./ui/cards/HouseCard";
 export { default as Contact } from "./ui/contacts/Contact";
