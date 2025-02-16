@@ -27,7 +27,7 @@ export default function Advertisement() {
     setSelectedCategory(categoryId);
   };
 
-  const [selectedTab, setSelectedTab] = useState("business");
+  const [selectedTab, setSelectedTab] = useState("all");
 
   if (categoriesLoading || advertisementsLoading) return <Loading />;
   if (categoriesError || advertisementsError)
@@ -37,7 +37,7 @@ export default function Advertisement() {
 
   return (
     <section className="container mx-auto w-11/12 py-8 sm:py-16 md:py-24">
-      <div className="flex flex-col items-center justify-between md:flex-row">
+      <div className="my-10 flex flex-col items-center justify-between md:flex-row">
         <div className="mb-8 text-center md:text-left">
           <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
             Featured Listings
@@ -51,6 +51,14 @@ export default function Advertisement() {
         <div className="flex flex-col items-center justify-center">
           <h2 className="my-4 text-2xl font-bold sm:text-3xl">Category</h2>
           <div className="mb-4 inline-flex rounded-full bg-gray-100 p-1 dark:bg-gray-800">
+            <button
+              onClick={() => {
+                setSelectedCategory("");
+              }}
+              className={`"bg-white dark:text-gray-100" : "text-gray-600 dark:hover:text-gray-200" } rounded-full p-2 text-sm text-gray-900 shadow transition-all hover:text-gray-600 dark:bg-gray-700 dark:text-gray-400 sm:text-base`}
+            >
+              ALL
+            </button>
             {categories.map((items) => (
               <button
                 key={items.id}
@@ -58,7 +66,7 @@ export default function Advertisement() {
                 className={`rounded-full p-2 text-sm transition-all sm:text-base ${
                   selectedTab === items.id
                     ? "bg-white text-gray-900 shadow dark:bg-gray-700 dark:text-gray-100"
-                    : "text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+                    : "text-gray-600 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-200"
                 }`}
               >
                 {items.name}

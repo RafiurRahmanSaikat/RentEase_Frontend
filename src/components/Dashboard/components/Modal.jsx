@@ -11,7 +11,7 @@ export function Modal({ isOpen, onClose, children, title }) {
       ></div>
       <div className="relative z-50 w-full max-w-3xl rounded-lg bg-white p-6 shadow-xl dark:bg-gray-800">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+          <h2 className="text-2xl font-bold text-gray-600 dark:text-white">
             {title}
           </h2>
           <button

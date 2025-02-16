@@ -33,7 +33,7 @@ const LoginForm = () => {
             value={formData.username}
             autoComplete="username"
             onChange={handleInputChange}
-            className="w-full rounded-lg border border-gray-300 p-3 pr-10 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
+            className="w-full rounded-lg border border-gray-300 p-3 pr-10 text-gray-700 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
             placeholder="username"
           />
           <User2Icon className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -51,7 +51,7 @@ const LoginForm = () => {
             value={formData.password}
             onChange={handleInputChange}
             autoComplete="current-password"
-            className="w-full rounded-lg border border-gray-300 p-3 pr-10 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
+            className="w-full rounded-lg border border-gray-300 p-3 pr-10 text-gray-700 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
             placeholder="••••••••"
           />
           <button

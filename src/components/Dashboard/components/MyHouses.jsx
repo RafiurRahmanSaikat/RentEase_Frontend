@@ -48,7 +48,7 @@ const MyHouses = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+        <h1 className="text-2xl font-bold text-gray-600 dark:text-gray-100">
           My Houses
         </h1>
       </div>
@@ -65,7 +65,7 @@ const MyHouses = () => {
               className="h-48 w-full object-cover"
             />
             <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-800">
+              <h3 className="text-lg font-semibold text-gray-600">
                 {house.title}
               </h3>
               <p className="text-gray-600">{house.location}</p>

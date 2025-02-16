@@ -5,11 +5,9 @@ import axios from "axios";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { EmptyState, Loading } from "..";
+import { CompactReviewCard, EmptyState, Loading, ReviewForm } from "..";
 import { backEndApi } from "../../constants";
 import useFetch from "../../hooks/useFetch";
-import CompactReviewCard from "../Advertisement/components/CompactReviewCard";
-import ReviewForm from "../Advertisement/components/ReviewForm";
 
 const HouseDetail = () => {
   const [refresh, setRefresh] = useState(false);

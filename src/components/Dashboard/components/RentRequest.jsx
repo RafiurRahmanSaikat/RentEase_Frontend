@@ -125,7 +125,7 @@ const RentRequestList = () => {
                       </p>
                     </div>
 
-                    <div className="mt-4 text-gray-800">
+                    <div className="mt-4 text-gray-600">
                       <span
                         className={`rounded-full px-2 py-1 text-xs ${
                           house.status === "PENDING"

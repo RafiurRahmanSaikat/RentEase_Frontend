@@ -4,12 +4,12 @@ export default function FAQ() {
   return (
     <section className="mx-auto my-6 px-4 leading-relaxed md:px-8">
       <div className="space-y-3 text-center">
-        <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-100">
+        <h1 className="text-3xl font-semibold text-gray-600 dark:text-gray-100">
           Frequently Asked Questions
         </h1>
         <p className="mx-auto text-lg text-gray-600 dark:text-gray-300">
-          Have questions about buying or selling a house? We've answered the
-          most common ones here. If you&apos;re still unsure, feel free to
+          Have questions about buying or selling a house? We&apos;ve answered
+          the most common ones here. If you&apos;re still unsure, feel free to
           contact us.
         </p>
       </div>

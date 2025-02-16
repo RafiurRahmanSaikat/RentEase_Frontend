@@ -103,7 +103,7 @@ const SignUpForm = () => {
             name="firstName"
             value={formData.firstName}
             onChange={handleInputChange}
-            className="w-full rounded-lg border border-gray-300 p-3 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
+            className="w-full rounded-lg border border-gray-300 p-3 text-gray-800 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
             placeholder="First Name"
           />
         </div>
@@ -118,7 +118,7 @@ const SignUpForm = () => {
             name="lastName"
             value={formData.lastName}
             onChange={handleInputChange}
-            className="w-full rounded-lg border border-gray-300 p-3 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
+            className="w-full rounded-lg border border-gray-300 p-3 text-gray-800 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
             placeholder="Last Name"
           />
         </div>
@@ -136,7 +136,7 @@ const SignUpForm = () => {
             autoComplete="username"
             value={formData.username}
             onChange={handleInputChange}
-            className="w-full rounded-lg border border-gray-300 p-3 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
+            className="w-full rounded-lg border border-gray-300 p-3 text-gray-800 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
             placeholder="Enter your username"
           />
         </div>
@@ -148,7 +148,7 @@ const SignUpForm = () => {
             name="accountType"
             value={formData.accountType}
             onChange={handleInputChange}
-            className="w-full rounded-lg border border-gray-300 p-3 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
+            className="w-full rounded-lg border border-gray-300 p-3 text-gray-800 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
           >
             <option value="">Select</option>
             <option value="User">User</option>
@@ -168,7 +168,7 @@ const SignUpForm = () => {
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            className="w-full rounded-lg border border-gray-300 p-3 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
+            className="w-full rounded-lg border border-gray-300 p-3 text-gray-800 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
             placeholder="you@example.com"
           />
         </div>
@@ -184,7 +184,7 @@ const SignUpForm = () => {
             autoComplete="mobileNumber"
             value={formData.mobileNumber}
             onChange={handleInputChange}
-            className="w-full rounded-lg border border-gray-300 p-3 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
+            className="w-full rounded-lg border border-gray-300 p-3 text-gray-800 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
             placeholder="Mobile number"
           />
         </div>
@@ -202,7 +202,7 @@ const SignUpForm = () => {
             value={formData.password}
             autoComplete="new-password"
             onChange={handleInputChange}
-            className="w-full rounded-lg border border-gray-300 p-3 pr-10 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
+            className="w-full rounded-lg border border-gray-300 p-3 pr-10 text-gray-800 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
             placeholder="••••••••"
           />
           <button
@@ -229,7 +229,7 @@ const SignUpForm = () => {
             autoComplete="confirm-password"
             value={formData.confirmPassword}
             onChange={handleInputChange}
-            className="w-full rounded-lg border border-gray-300 p-3 pr-10 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
+            className="w-full rounded-lg border border-gray-300 p-3 pr-10 text-gray-800 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
             placeholder="••••••••"
           />
           <button
@@ -254,7 +254,7 @@ const SignUpForm = () => {
           name="address"
           value={formData.address}
           onChange={handleInputChange}
-          className="w-full rounded-lg border border-gray-300 p-3 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
+          className="w-full rounded-lg border border-gray-300 p-3 text-gray-800 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200"
           placeholder="Your address"
         ></textarea>
       </div>

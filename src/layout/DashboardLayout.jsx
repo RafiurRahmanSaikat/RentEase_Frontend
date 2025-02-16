@@ -71,7 +71,7 @@ const DashboardLayout = () => {
   if (loading) return <Loading />;
 
   return (
-    <div className="flex min-h-screen bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-slate-100">
+    <div className="flex min-h-screen bg-gray-50 text-gray-600 dark:bg-gray-900 dark:text-slate-100">
       <Sidebar menuItems={menuItems} isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className="flex-1 transition-all duration-300">
         <Header
