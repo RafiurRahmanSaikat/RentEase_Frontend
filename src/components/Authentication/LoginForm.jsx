@@ -16,6 +16,7 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await Login(formData);
+    // console.log(response);
     if (response.status === 200) setFormData(initialFormData);
   };
 

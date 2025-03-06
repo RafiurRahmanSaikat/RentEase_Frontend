@@ -13,25 +13,20 @@ const HouseDetail = () => {
   const [refresh, setRefresh] = useState(false);
   const { advertiseId } = useParams();
 
-  const { data, loading, error } = useFetch(
-    `${backEndApi}/house/advertisements/list/${advertiseId}/`,
-    {},
-    [refresh, advertiseId],
-  );
+  const {
+    data: house,
+    loading,
+    error,
+  } = useFetch(`${backEndApi}/properties/houses/${advertiseId}/`, {}, [
+    refresh,
+    advertiseId,
+  ]);
   // console.log(data);
   if (loading) return <Loading />;
   if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
-  if (!data) return <EmptyState />;
-  const { house, reviews, is_approved, is_rented, is_requested } = data;
+  if (!house) return <EmptyState />;
 
-  let averageRating =
-    reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
-
-  averageRating = averageRating ? averageRating.toFixed(1) : "0";
-
-  // let averageRating = averageRatingCount ? averageRatingCount : 0;
-
-  console.log(averageRating);
+  console.log(house);
 
   const handleRentRequest = async () => {
     try {
@@ -112,13 +107,13 @@ const HouseDetail = () => {
         <div className="space-y-4">
           <div className="relative overflow-hidden rounded-3xl">
             <img
-              src={house.image}
-              alt={house.title}
+              src={house?.images}
+              alt={house?.title}
               className="h-[500px] w-full object-cover object-center transition-all duration-700 hover:scale-105"
             />
             {/* Floating Status Card */}
             <div className="absolute left-6 top-6 flex items-center gap-2 rounded-2xl bg-white/90 px-4 py-2 shadow-lg backdrop-blur-sm dark:bg-gray-800/90">
-              {is_rented ? (
+              {house?.approved ? (
                 <span className="flex items-center gap-2 text-red-500">
                   <IoCheckmarkCircle className="text-xl" />
                   <span className="font-medium">Rented</span>
@@ -131,7 +126,7 @@ const HouseDetail = () => {
               )}
             </div>
             {/* Featured Badge */}
-            {house.is_advertised && (
+            {house?.is_advertised && (
               <div className="absolute right-6 top-6 rounded-2xl bg-gradient-to-r from-blue-500 to-violet-500 px-4 py-2 text-sm font-medium text-white">
                 Featured
               </div>
@@ -142,13 +137,12 @@ const HouseDetail = () => {
           <div className="flex gap-3">
             <button
               onClick={handleRentRequest}
-              disabled={is_rented || is_requested}
-              className={`w-full rounded-2xl ${is_rented || is_requested ? "bg-gray-400" : "bg-gradient-to-r from-purple-600 to-violet-700"} px-8 py-4 font-semibold text-white transition-all hover:from-violet-800 hover:to-purple-800`}
+              className={`to-violet-700"} w-full rounded-2xl bg-gray-400 bg-gradient-to-r from-purple-600 px-8 py-4 font-semibold text-white transition-all hover:from-violet-800 hover:to-purple-800`}
             >
               Request to Rent
             </button>
             <button
-              onClick={() => handleFavorite(house.id)}
+              onClick={() => handleFavorite(house?.id)}
               className="w-full rounded-2xl border-2 border-gray-200 bg-white px-8 py-4 font-semibold text-gray-700 transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
             >
               Add to favorite
@@ -160,7 +154,7 @@ const HouseDetail = () => {
         <div className="space-y-6">
           {/* Title Section */}
           <h1 className="text-3xl font-bold tracking-tight dark:text-white lg:text-4xl">
-            {house.title}
+            {house?.title}
           </h1>
 
           {/* Info Row with Owner Card */}
@@ -169,12 +163,12 @@ const HouseDetail = () => {
               <div className="flex flex-wrap items-center gap-4 text-gray-600 dark:text-gray-300">
                 <div className="flex items-center gap-1">
                   <IoLocationSharp className="text-xl text-blue-500" />
-                  <span>{house.location}</span>
+                  <span>{house?.location}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <IoStar className="text-xl text-yellow-400" />
-                  <span>{averageRating}</span>
-                  <span>({reviews.length} reviews)</span>
+                  <span>{house?.average_rating}</span>
+                  <span>({house?.review_count} reviews)</span>
                 </div>
               </div>
               <div className="">
@@ -182,7 +176,7 @@ const HouseDetail = () => {
                   Starting from
                 </p>
                 <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-                  ${house.price}
+                  ${house?.price}
                   <span className="text-base font-normal text-gray-900 dark:text-gray-100">
                     /mo
                   </span>
@@ -194,17 +188,21 @@ const HouseDetail = () => {
             <div className="rounded-2xl bg-gray-50 p-4 dark:bg-gray-800">
               <div className="flex items-center gap-4">
                 <img
-                  src={house.owner.image}
-                  alt={house.owner.user.first_name}
+                  src={house?.owner?.image}
+                  alt={house?.owner?.image}
                   className="h-16 w-16 rounded-2xl object-cover"
                 />
                 <div>
                   <h3 className="text-lg font-semibold dark:text-white">
-                    {house.owner.user.first_name} {house.owner.user.last_name}
+                    {house?.owner?.owner_first_name}{" "}
+                    {house?.owner?.owner_last_name}
                   </h3>
 
                   <p className="text-gray-600 dark:text-gray-300">
-                    {house.owner.mobile_number}
+                    {house?.owner.phone}
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    {house?.owner?.email}
                   </p>
                   <div className="mt-2 flex items-center gap-2">
                     <span className="rounded-lg bg-blue-100 px-3 py-1 text-sm font-medium text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
@@ -218,7 +216,7 @@ const HouseDetail = () => {
 
           {/* Categories */}
           <div className="flex flex-wrap gap-2">
-            {house.category.map((cat) => (
+            {house?.categories?.map((cat) => (
               <span
                 key={cat.id}
                 className="rounded-xl bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300"
@@ -235,7 +233,7 @@ const HouseDetail = () => {
             </h2>
             <div className="max-h-80 overflow-y-auto">
               <p className="leading-relaxed text-gray-600 dark:text-gray-300">
-                {house.description}
+                {house?.description}
               </p>
             </div>
           </div>
@@ -246,29 +244,25 @@ const HouseDetail = () => {
               <h2 className="text-xl font-semibold dark:text-white">Reviews</h2>
               <div className="flex items-center gap-2">
                 <IoStar className="text-yellow-400" />
-                <span className="font-semibold">{averageRating}</span>
+                <span className="font-semibold">{house?.average_rating}</span>
                 <span className="text-gray-600 dark:text-gray-400">
-                  ({reviews.length} reviews)
+                  ({house?.review_count} reviews)
                 </span>
               </div>
             </div>
 
             {/* Compact Review List */}
             <div className="max-h-64 space-y-2 overflow-y-auto rounded-xl">
-              {reviews.length === 0 ? (
+              {house?.review_count === 0 ? (
                 <EmptyState
                   title="No Reviews Found"
                   message="There are no reviews for this property yet."
                 />
               ) : (
-                reviews.map((review) => (
+                house?.reviews.map((review) => (
                   <CompactReviewCard key={review.id} review={review} />
                 ))
               )}
-
-              {/* {reviews.map((review) => (
-                <CompactReviewCard key={review.id} review={review} />
-              ))} */}
             </div>
           </div>
         </div>

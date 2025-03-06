@@ -18,9 +18,9 @@ const AuthProvider = ({ children }) => {
   const loadUserInfo = async (token) => {
     setLoading(true);
     try {
-      const response = await axios.get(`${backEndApi}/account/profile/`, {
+      const response = await axios.get(`${backEndApi}/auth/profile/`, {
         headers: {
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       // console.log("loadUserInfo AuthContext", response);
@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
       setUser(response.data);
       // console.log("Loading user info...", response.data);
     } catch (error) {
-      console.error("Error loading user info:", error);
+      // console.log("Error loading user info:", error);
       setIsAuthenticated(false);
       setUser(null);
     } finally {
@@ -41,21 +41,26 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const Login = async (credentials) => {
+    // console.log(credentials);
     try {
       setLoading(true);
       const response = await axios.post(
-        `${backEndApi}/account/login/`,
+        `${backEndApi}/auth/login/`,
         credentials,
       );
-      const { token } = response.data;
+      // console.log("Login AuthContext", response);
+      const token = response.data.access;
+      const refresh = response.data.refresh;
       localStorage.setItem("token", token);
+      localStorage.setItem("refresh", refresh);
       setIsAuthenticated(true);
       await loadUserInfo(token);
       toast.success("Logged in successfully!");
+      // console.log("Login AuthContext", response, token, refresh);
 
-      return response;
+      // return response;
     } catch (error) {
-      // console.error("Error logging in:", error);
+      // console.log("Error logging in:", error);
       toast.error("Invalid username or password.");
     } finally {
       setLoading(false);
@@ -87,7 +92,7 @@ const AuthProvider = ({ children }) => {
     try {
       setLoading(true);
 
-      // console.log("Form data received:", formData);
+      console.log("Form data received:", formData);
 
       let imageUrl = "";
       if (formData.image) {
@@ -107,13 +112,13 @@ const AuthProvider = ({ children }) => {
         mobile_number: formData.mobileNumber,
       };
 
-      // console.log("Data being sent to backend:", signUpData);
+      console.log("Data being sent to backend:", signUpData);
 
       const response = await axios.post(
-        `${backEndApi}/account/register/`,
+        `${backEndApi}/auth/register/`,
         signUpData,
       );
-      // console.log(response);
+      console.log(response);
       toast.success(
         "Registration successful! Please check your email to verify your account.",
       );

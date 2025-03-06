@@ -9,7 +9,7 @@ export default function Hero() {
                 Welcome to ....{"  "}
               </span>
               <span className="animate-bounce border-b border-dotted border-red-300">
-                Rent Ease
+                Rent Ease (BETA)
               </span>
             </div>
 

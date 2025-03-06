@@ -10,7 +10,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const HouseCard = ({ house }) => {
-  // console.log(house.id);
+  console.log("card", house);
   return (
     <div className="w-full max-w-sm px-2 py-3 sm:max-w-md">
       <div className="relative block rounded-tr-3xl border border-purple-400 bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-purple-500 dark:bg-gray-800">
@@ -22,7 +22,7 @@ const HouseCard = ({ house }) => {
 
         {/* Image - Original styling */}
         <img
-          src={house.image}
+          src={house.images}
           alt={house.title}
           className="-ml-6 -mt-6 h-48 w-full rounded-bl-3xl rounded-tr-3xl border border-gray-200 object-cover dark:border-gray-700 sm:h-60"
         />
@@ -51,7 +51,7 @@ const HouseCard = ({ house }) => {
 
           {/* Categories */}
           <div className="scrollbar-hide mt-3 flex gap-2 overflow-x-auto pb-2">
-            {house?.category.map((cat, index) => (
+            {house?.categories?.map((cat, index) => (
               <span
                 key={index}
                 className="flex flex-shrink-0 items-center gap-1 rounded-full bg-purple-100 px-2.5 py-1 text-xs font-medium capitalize text-purple-800 dark:bg-purple-900/30 dark:text-purple-300"

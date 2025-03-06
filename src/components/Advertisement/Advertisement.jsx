@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { Error, HouseCard, Loading } from "../../components";
-import { backEndApi } from "../../constants";
+import { advertisementUrl, categoriesUrl } from "../../constants";
 import useFetch from "../../hooks/useFetch";
 
 export default function Advertisement() {
   const [selectedCategory, setSelectedCategory] = useState("");
-  const categoriesUrl = `${backEndApi}/house/category/`;
-  const advertisementUrl = `${backEndApi}/house/advertisements/list/${
-    selectedCategory ? `?category=${selectedCategory}` : ""
-  }`;
 
   const {
     data: categories,
@@ -21,7 +17,7 @@ export default function Advertisement() {
     loading: advertisementsLoading,
     error: advertisementsError,
   } = useFetch(advertisementUrl, {}, [selectedCategory]);
-
+  console.log(categories, advertisements);
   const handleCategorySelect = (categoryId) => {
     setSelectedTab(categoryId);
     setSelectedCategory(categoryId);
@@ -59,7 +55,7 @@ export default function Advertisement() {
             >
               ALL
             </button>
-            {categories.map((items) => (
+            {categories?.results?.map((items) => (
               <button
                 key={items.id}
                 onClick={() => handleCategorySelect(items.id)}
@@ -76,11 +72,11 @@ export default function Advertisement() {
         </div>
       </div>
       <div className="my-4 flex flex-wrap justify-center gap-8">
-        {advertisements.length === 0 ? (
+        {advertisements.count === 0 ? (
           <p>No data</p>
         ) : (
-          advertisements.map((items) => (
-            <HouseCard key={items.id} house={items.house} />
+          advertisements?.results?.map((items) => (
+            <HouseCard key={items.id} house={items} />
           ))
         )}
       </div>
