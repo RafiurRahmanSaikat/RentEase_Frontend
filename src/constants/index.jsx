@@ -29,8 +29,8 @@ import {
 } from "lucide-react";
 
 // API URLs
-export const BASE_URL = "https://rent-ease-backend-livid.vercel.app/api";
 // export const BASE_URL = "http://127.0.0.1:8000/api"
+export const BASE_URL = "https://rent-ease-backend-livid.vercel.app/api";
 
 // API Endpoints
 export const API_ENDPOINTS = {
@@ -58,7 +58,9 @@ export const API_ENDPOINTS = {
 
 // Navigation Links
 export const NAV_LINKS = [
+  { name: "Home", path: "/" },
   { name: "Houses", path: "/houses" },
+  { name: "Categories", path: "/categories" },
   { name: "About", path: "/about" },
   { name: "Contact", path: "/contact" },
 ];
@@ -426,13 +428,6 @@ export const APP_FEATURES = [
   },
 ];
 
-// Missing icon definitions
-// const Search = MapPin; // Using MapPin as a substitute for Search
-// const Calendar = Clock; // Using Clock as a substitute for Calendar
-// const Bell = Smartphone; // Using Smartphone as a substitute for Bell
-// const Camera = Smartphone; // Using Smartphone as a substitute for Camera
-// const Download = Smartphone; // Using Smartphone as a substitute for Download
-
 // Newsletter content
 export const NEWSLETTER = {
   title: "Stay Updated",
@@ -493,4 +488,250 @@ export const SOCIAL_LINKS = [
   { name: "Instagram", url: "https://instagram.com", icon: "instagram" },
   { name: "LinkedIn", url: "https://linkedin.com", icon: "linkedin" },
   { name: "YouTube", url: "https://youtube.com", icon: "youtube" },
+];
+
+// About Us Page Content
+export const ABOUT_US = {
+  hero: {
+    title: "About RentEase",
+    subtitle: "Transforming the way people find and rent properties",
+    image:
+      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1073&q=80",
+  },
+  mission: {
+    title: "Our Mission",
+    description:
+      "At RentEase, our mission is to make the rental process simple, transparent, and enjoyable for everyone. We believe that finding a place to call home should be an exciting journey, not a stressful experience. By connecting property owners with potential tenants through our innovative platform, we're creating a community built on trust, quality, and exceptional service.",
+  },
+  vision: {
+    title: "Our Vision",
+    description:
+      "We envision a world where anyone can find their ideal rental property with just a few clicks. A world where property owners can confidently list their properties knowing they'll find reliable tenants. Our platform is designed to make this vision a reality by leveraging technology to streamline the rental process while maintaining the human connection that makes finding a home special.",
+  },
+  story: {
+    title: "Our Story",
+    description:
+      "RentEase was founded in 2020 by a group of real estate professionals and tech enthusiasts who recognized the challenges in the traditional rental market. After experiencing firsthand the frustrations of finding quality rental properties and reliable tenants, our founders decided to create a solution that would benefit both sides of the rental equation. What started as a small idea has grown into a platform that serves thousands of users across the country, constantly evolving to meet the needs of our community.",
+    image:
+      "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+  },
+  values: [
+    {
+      title: "Trust",
+      description:
+        "We build trust through verification processes, secure transactions, and transparent communication.",
+      icon: Shield,
+    },
+    {
+      title: "Quality",
+      description:
+        "We maintain high standards for all properties listed on our platform, ensuring accurate representations.",
+      icon: CheckCircle,
+    },
+    {
+      title: "Innovation",
+      description:
+        "We continuously improve our platform with new features and technologies to enhance user experience.",
+      icon: Smartphone,
+    },
+    {
+      title: "Community",
+      description:
+        "We foster a supportive community of property owners and tenants built on mutual respect.",
+      icon: Users,
+    },
+  ],
+  team: [
+    {
+      name: "Alex Johnson",
+      role: "CEO & Co-Founder",
+      bio: "With over 15 years in real estate and technology, Alex leads our vision and strategy.",
+      image: "https://randomuser.me/api/portraits/men/32.jpg",
+    },
+    {
+      name: "Sophia Chen",
+      role: "COO",
+      bio: "Sophia oversees our day-to-day operations, ensuring we deliver exceptional service.",
+      image: "https://randomuser.me/api/portraits/women/44.jpg",
+    },
+    {
+      name: "Marcus Williams",
+      role: "CTO",
+      bio: "Marcus leads our technical team, developing innovative solutions for our platform.",
+      image: "https://randomuser.me/api/portraits/men/68.jpg",
+    },
+    {
+      name: "Olivia Rodriguez",
+      role: "Head of Customer Experience",
+      bio: "Olivia ensures our users have the best possible experience on our platform.",
+      image: "https://randomuser.me/api/portraits/women/75.jpg",
+    },
+  ],
+  achievements: [
+    {
+      year: "2020",
+      title: "Founded RentEase",
+      description:
+        "Launched our platform with the mission to transform the rental experience.",
+    },
+    {
+      year: "2021",
+      title: "Reached 5,000 Properties",
+      description:
+        "Celebrated our first major milestone with 5,000 verified properties.",
+    },
+    {
+      year: "2022",
+      title: "Expanded Nationwide",
+      description:
+        "Extended our services to cover all major cities across the country.",
+    },
+    {
+      year: "2023",
+      title: "Launched Mobile App",
+      description:
+        "Introduced our mobile application to make renting even more accessible.",
+    },
+  ],
+};
+
+// Contact Us Page Content
+export const CONTACT_US = {
+  hero: {
+    title: "Contact Us",
+    subtitle: "We're here to help with any questions or concerns",
+    image:
+      "https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
+  },
+  info: {
+    address: {
+      title: "Our Office",
+      line1: "123 Rental Street",
+      line2: "Suite 456",
+      city: "San Francisco",
+      state: "CA",
+      zip: "94105",
+      country: "United States",
+      icon: MapPin,
+    },
+    phone: {
+      title: "Phone",
+      number: "+1 (555) 123-4567",
+      hours: "Monday-Friday, 9AM-6PM EST",
+      icon: Headphones,
+    },
+    email: {
+      title: "Email",
+      address: "support@renteaseapp.com",
+      response: "We typically respond within 24 hours",
+      icon: MessageCircle,
+    },
+  },
+  form: {
+    title: "Send Us a Message",
+    subtitle:
+      "Fill out the form below and we'll get back to you as soon as possible",
+    fields: [
+      {
+        name: "name",
+        label: "Full Name",
+        type: "text",
+        placeholder: "Enter your full name",
+        required: true,
+      },
+      {
+        name: "email",
+        label: "Email Address",
+        type: "email",
+        placeholder: "Enter your email address",
+        required: true,
+      },
+      {
+        name: "phone",
+        label: "Phone Number",
+        type: "tel",
+        placeholder: "Enter your phone number",
+        required: false,
+      },
+      {
+        name: "subject",
+        label: "Subject",
+        type: "text",
+        placeholder: "What is your message about?",
+        required: true,
+      },
+      {
+        name: "message",
+        label: "Message",
+        type: "textarea",
+        placeholder: "How can we help you?",
+        required: true,
+      },
+    ],
+    submitText: "Send Message",
+  },
+  faq: {
+    title: "Frequently Asked Questions",
+    subtitle: "Find quick answers to common questions",
+    questions: [
+      {
+        question: "How quickly will I receive a response?",
+        answer:
+          "We strive to respond to all inquiries within 24 hours during business days. For urgent matters, please call our customer support line.",
+      },
+      {
+        question: "Do you offer support on weekends?",
+        answer:
+          "Our email support team operates with limited availability on weekends. For immediate assistance, please use our live chat feature on the website.",
+      },
+      {
+        question: "Can I visit your office in person?",
+        answer:
+          "Yes, our office is open for in-person visits Monday through Friday, 9AM to 5PM. We recommend scheduling an appointment in advance.",
+      },
+    ],
+  },
+  map: {
+    title: "Find Us",
+    subtitle: "Visit our office or send us mail",
+    location: {
+      lat: 37.7749,
+      lng: -122.4194,
+      zoom: 15,
+    },
+  },
+};
+
+// Carousel Images for Homepage
+export const CAROUSEL_IMAGES = [
+  {
+    id: 2,
+    url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    title: "Modern Homes",
+    subtitle: "Contemporary designs for modern living",
+  },
+  {
+    id: 3,
+    url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    title: "Cozy Cottages",
+    subtitle: "Charming retreats in peaceful locations",
+  },
+  {
+    id: 1,
+    url: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1073&q=80",
+    title: "Luxury Apartments",
+    subtitle: "Experience premium living spaces",
+  },
+  {
+    id: 4,
+    url: "https://images.unsplash.com/photo-1580655653885-65763b2597d0?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bG9zJTIwYW5nZWxlc3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80",
+    title: "Urban Lofts",
+    subtitle: "Stylish spaces in the heart of the city",
+  },
+  {
+    id: 5,
+    url: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    title: "Waterfront Properties",
+    subtitle: "Breathtaking views with direct water access",
+  },
 ];
