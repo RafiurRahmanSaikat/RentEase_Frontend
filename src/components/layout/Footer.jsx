@@ -1,32 +1,41 @@
-import { Facebook, Home, Instagram, Linkedin, Mail, MapPin, Phone, Twitter } from "lucide-react"
-import { Link } from "react-router-dom"
+import {
+  Facebook,
+  Home,
+  Instagram,
+  Linkedin,
+  Mail,
+  MapPin,
+  Phone,
+  Twitter,
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white pt-12 pb-8">
-      <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-zinc-100 pb-8 pt-12 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-300">
+      <div className="mx-auto max-w-[90vw] px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Company Info */}
           <div>
-            <div className="flex items-center mb-4">
+            <div className="mb-4 flex items-center">
               <Home className="h-8 w-8 text-purple-400" />
               <span className="ml-2 text-xl font-bold">RentEase</span>
             </div>
-            <p className="text-gray-400 mb-4">
-              Find your perfect rental home with ease. We connect property owners with tenants looking for their dream
-              space.
+            <p className="mb-4">
+              Find your perfect rental home with ease. We connect property
+              owners with tenants looking for their dream space.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="transition-colors hover:text-white">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="transition-colors hover:text-white">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="transition-colors hover:text-white">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="transition-colors hover:text-white">
                 <Linkedin size={20} />
               </a>
             </div>
@@ -34,30 +43,44 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Quick Links</h3>
+            <h3 className="mb-4 border-b border-zinc-700 pb-2 text-lg font-semibold">
+              Quick Links
+            </h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-400 hover:text-white transition-colors">
+                <Link to="/" className="transition-colors hover:text-white">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/houses" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  to="/houses"
+                  className="transition-colors hover:text-white"
+                >
                   Houses
                 </Link>
               </li>
               <li>
-                <Link to="/categories" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  to="/categories"
+                  className="transition-colors hover:text-white"
+                >
                   Categories
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  to="/about"
+                  className="transition-colors hover:text-white"
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  to="/contact"
+                  className="transition-colors hover:text-white"
+                >
                   Contact
                 </Link>
               </li>
@@ -66,30 +89,47 @@ const Footer = () => {
 
           {/* User Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">User</h3>
+            <h3 className="mb-4 border-b border-zinc-700 pb-2 text-lg font-semibold">
+              User
+            </h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/login" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  to="/login"
+                  className="transition-colors hover:text-white"
+                >
                   Login
                 </Link>
               </li>
               <li>
-                <Link to="/register" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  to="/register"
+                  className="transition-colors hover:text-white"
+                >
                   Register
                 </Link>
               </li>
               <li>
-                <Link to="/profile" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  to="/profile"
+                  className="transition-colors hover:text-white"
+                >
                   My Profile
                 </Link>
               </li>
               <li>
-                <Link to="/favorites" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  to="/favorites"
+                  className="transition-colors hover:text-white"
+                >
                   My Favorites
                 </Link>
               </li>
               <li>
-                <Link to="/rent-requests" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  to="/rent-requests"
+                  className="transition-colors hover:text-white"
+                >
                   My Rent Requests
                 </Link>
               </li>
@@ -98,39 +138,51 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Contact Us</h3>
+            <h3 className="mb-4 border-b border-zinc-700 pb-2 text-lg font-semibold">
+              Contact Us
+            </h3>
             <ul className="space-y-3">
               <li className="flex items-start">
-                <MapPin size={20} className="text-purple-400 mr-3 mt-1 flex-shrink-0" />
-                <span className="text-gray-400">123 Rental Street, City, Country</span>
+                <MapPin
+                  size={20}
+                  className="mr-3 mt-1 flex-shrink-0 text-purple-400"
+                />
+                <span className="">123 Rental Street, City, Country</span>
               </li>
               <li className="flex items-center">
-                <Phone size={20} className="text-purple-400 mr-3 flex-shrink-0" />
-                <span className="text-gray-400">+1 (555) 123-4567</span>
+                <Phone
+                  size={20}
+                  className="mr-3 flex-shrink-0 text-purple-400"
+                />
+                <span className="">+1 (555) 123-4567</span>
               </li>
               <li className="flex items-center">
-                <Mail size={20} className="text-purple-400 mr-3 flex-shrink-0" />
-                <span className="text-gray-400">info@renteaseapp.com</span>
+                <Mail
+                  size={20}
+                  className="mr-3 flex-shrink-0 text-purple-400"
+                />
+                <span className="">info@renteaseapp.com</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} RentEase. All rights reserved.</p>
+        <div className="mt-8 border-t border-zinc-800 pt-8 text-center text-sm">
+          <p>
+            &copy; {new Date().getFullYear()} RentEase. All rights reserved.
+          </p>
           <div className="mt-2 space-x-4">
-            <Link to="/terms" className="hover:text-white transition-colors">
+            <Link to="/terms" className="transition-colors hover:text-white">
               Terms of Service
             </Link>
-            <Link to="/privacy" className="hover:text-white transition-colors">
+            <Link to="/privacy" className="transition-colors hover:text-white">
               Privacy Policy
             </Link>
           </div>
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
-
+export default Footer;
