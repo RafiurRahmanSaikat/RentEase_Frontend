@@ -58,9 +58,7 @@ export const API_ENDPOINTS = {
 
 // Navigation Links
 export const NAV_LINKS = [
-  { name: "Home", path: "/" },
   { name: "Houses", path: "/houses" },
-  { name: "Categories", path: "/categories" },
   { name: "About", path: "/about" },
   { name: "Contact", path: "/contact" },
 ];
