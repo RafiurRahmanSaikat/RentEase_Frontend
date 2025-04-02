@@ -12,7 +12,7 @@ export const getFavorites = async (page = 1) => {
   }
 };
 
-// Add a house to favorites
+// Add a house to favorites - with error handling
 export const addToFavorites = async (houseId) => {
   try {
     const response = await api.post(
@@ -20,11 +20,15 @@ export const addToFavorites = async (houseId) => {
     );
     return response.data;
   } catch (error) {
+    // If favorite already exists, return success instead of throwing error
+    if (error.response?.data?.detail === "Favorite already exists.") {
+      return { success: true, message: "Already in favorites" };
+    }
     throw error.response?.data || { message: "Failed to add to favorites" };
   }
 };
 
-// Remove a house from favorites
+// Remove a house from favorites - with error handling
 export const removeFromFavorites = async (houseId) => {
   try {
     const response = await api.delete(
@@ -32,9 +36,22 @@ export const removeFromFavorites = async (houseId) => {
     );
     return response.data;
   } catch (error) {
+    // If favorite not found, return success instead of throwing error
+    if (error.response?.data?.detail === "Favorite not found.") {
+      return { success: true, message: "Already removed from favorites" };
+    }
     throw (
       error.response?.data || { message: "Failed to remove from favorites" }
     );
+  }
+};
+
+// Toggle favorite (add if not in favorites, remove if in favorites)
+export const toggleFavorite = async (houseId, isFavorite) => {
+  if (isFavorite) {
+    return removeFromFavorites(houseId);
+  } else {
+    return addToFavorites(houseId);
   }
 };
 
@@ -65,63 +82,3 @@ export const createRentRequest = async (rentRequestData) => {
     throw error.response?.data || { message: "Failed to create rent request" };
   }
 };
-
-// // Accept a rent request (owner or admin)
-// export const acceptRentRequest = async (requestId) => {
-//   try {
-//     const response = await api.post(`${API_ENDPOINTS.RENT_REQUESTS}${requestId}/accept/`)
-//     return response.data
-//   } catch (error) {
-//     throw error.response?.data || { message: "Failed to accept rent request" }
-//   }
-// }
-
-// // Reject a rent request (owner or admin)
-// export const rejectRentRequest = async (requestId) => {
-//   try {
-//     const response = await api.post(`${API_ENDPOINTS.RENT_REQUESTS}${requestId}/reject/`)
-//     return response.data
-//   } catch (error) {
-//     throw error.response?.data || { message: "Failed to reject rent request" }
-//   }
-// }
-
-// // Process payment for a rent request
-// export const processPayment = async (requestId, paymentData) => {
-//   try {
-//     const response = await api.post(`${API_ENDPOINTS.RENT_REQUESTS}${requestId}/pay/`, paymentData)
-//     return response.data
-//   } catch (error) {
-//     throw error.response?.data || { message: "Failed to process payment" }
-//   }
-// }
-
-// // Get all favorites for the current user
-// export const getFavorites = async (page = 1) => {
-//   try {
-//     const response = await api.get(`${API_ENDPOINTS.FAVORITES}?page=${page}`)
-//     return response.data
-//   } catch (error) {
-//     throw error.response?.data || { message: "Failed to fetch favorites" }
-//   }
-// }
-
-// // Add a house to favorites
-// export const addToFavorites = async (houseId) => {
-//   try {
-//     const response = await api.post(`${API_ENDPOINTS.FAVORITES}${houseId}/add/`)
-//     return response.data
-//   } catch (error) {
-//     throw error.response?.data || { message: "Failed to add to favorites" }
-//   }
-// }
-
-// // Remove a house from favorites
-// export const removeFromFavorites = async (houseId) => {
-//   try {
-//     const response = await api.delete(`${API_ENDPOINTS.FAVORITES}${houseId}/remove/`)
-//     return response.data
-//   } catch (error) {
-//     throw error.response?.data || { message: "Failed to remove from favorites" }
-//   }
-// }

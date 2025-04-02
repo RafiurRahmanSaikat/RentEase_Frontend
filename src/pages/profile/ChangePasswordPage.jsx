@@ -1,21 +1,19 @@
-import { AlertCircle, ArrowLeft, Lock, Save } from 'lucide-react';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Button from '../../components/ui/Button.jsx';
-import Card from '../../components/ui/Card.jsx';
-import Input from '../../components/ui/Input.jsx';
-import Spinner from '../../components/ui/Spinner.jsx';
-import { changePassword } from '../../services/authService';
+import { AlertCircle, ArrowLeft, Lock, Save } from "lucide-react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { Button, Card, Input, Spinner } from "../../components";
+import { changePassword } from "../../services/authService";
 
 const ChangePasswordPage = () => {
   const [formData, setFormData] = useState({
-    current_password: '',
-    new_password: '',
-    confirm_password: ''
+    current_password: "",
+    new_password: "",
+    confirm_password: "",
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [generalError, setGeneralError] = useState('');
+  const [generalError, setGeneralError] = useState("");
 
   const navigate = useNavigate();
 
@@ -25,11 +23,11 @@ const ChangePasswordPage = () => {
 
     // Clear error when user types
     if (errors[name]) {
-      setErrors({ ...errors, [name]: '' });
+      setErrors({ ...errors, [name]: "" });
     }
 
     if (generalError) {
-      setGeneralError('');
+      setGeneralError("");
     }
   };
 
@@ -37,17 +35,17 @@ const ChangePasswordPage = () => {
     const newErrors = {};
 
     if (!formData.current_password) {
-      newErrors.current_password = 'Current password is required';
+      newErrors.current_password = "Current password is required";
     }
 
     if (!formData.new_password) {
-      newErrors.new_password = 'New password is required';
+      newErrors.new_password = "New password is required";
     } else if (formData.new_password.length < 8) {
-      newErrors.new_password = 'Password must be at least 8 characters';
+      newErrors.new_password = "Password must be at least 8 characters";
     }
 
     if (formData.new_password !== formData.confirm_password) {
-      newErrors.confirm_password = 'Passwords do not match';
+      newErrors.confirm_password = "Passwords do not match";
     }
 
     setErrors(newErrors);
@@ -60,21 +58,23 @@ const ChangePasswordPage = () => {
     if (!validateForm()) return;
 
     setLoading(true);
-    setGeneralError('');
+    setGeneralError("");
 
     try {
       await changePassword({
         old_password: formData.current_password,
-        new_password: formData.new_password
+        new_password: formData.new_password,
       });
 
-      window.toast?.success('Password changed successfully');
-      navigate('/profile');
+      toast?.success("Password changed successfully");
+      navigate("/profile");
     } catch (error) {
-      console.error('Error changing password:', error);
+      console.error("Error changing password:", error);
 
       if (error.old_password) {
-        setErrors({ current_password: error.old_password[0] || 'Invalid current password' });
+        setErrors({
+          current_password: error.old_password[0] || "Invalid current password",
+        });
       } else if (error.new_password) {
         setErrors({ new_password: error.new_password[0] });
       } else if (error.detail) {
@@ -82,7 +82,7 @@ const ChangePasswordPage = () => {
       } else if (error.message) {
         setGeneralError(error.message);
       } else {
-        setGeneralError('Failed to change password. Please try again.');
+        setGeneralError("Failed to change password. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -90,11 +90,11 @@ const ChangePasswordPage = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 sm:px-6 py-8">
+    <div className="mx-auto max-w-md px-4 py-8 sm:px-6">
       <div className="mb-6">
         <button
-          onClick={() => navigate('/profile')}
-          className="flex items-center text-purple-600 dark:text-purple-400 hover:underline"
+          onClick={() => navigate("/profile")}
+          className="flex items-center text-purple-600 hover:underline dark:text-purple-400"
         >
           <ArrowLeft size={16} className="mr-1" />
           Back to Profile
@@ -103,13 +103,17 @@ const ChangePasswordPage = () => {
 
       <Card>
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Change Password</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">Update your account password</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            Change Password
+          </h1>
+          <p className="mt-1 text-gray-600 dark:text-gray-400">
+            Update your account password
+          </p>
         </div>
 
         {generalError && (
-          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg flex items-start">
-            <AlertCircle size={20} className="mr-2 flex-shrink-0 mt-0.5" />
+          <div className="mb-4 flex items-start rounded-lg bg-red-50 p-3 text-red-700 dark:bg-red-900/30 dark:text-red-300">
+            <AlertCircle size={20} className="mr-2 mt-0.5 flex-shrink-0" />
             <p>{generalError}</p>
           </div>
         )}
@@ -151,12 +155,12 @@ const ChangePasswordPage = () => {
             required
           />
 
-          <div className="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex justify-end border-t border-gray-200 pt-4 dark:border-gray-700">
             <div className="flex space-x-3">
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => navigate('/profile')}
+                onClick={() => navigate("/profile")}
               >
                 Cancel
               </Button>

@@ -11,15 +11,14 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { NAV_LINKS } from "../../constants/index.jsx";
+import { NAV_LINKS } from "../../constants";
 import {
   getCurrentUser,
   isAdmin,
   isAuthenticated,
   logout,
 } from "../../services/authService";
-import Button from "../ui/Button.jsx";
-import ThemeToggler from "../ui/ThemeToggler.jsx";
+import { Button, ThemeToggler } from "../ui";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,7 +51,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-40 bg-zinc-200 shadow-md dark:bg-zinc-950">
+    <nav className="sticky top-0 z-40 bg-zinc-200/60 shadow-md backdrop-blur-xl dark:bg-zinc-950/80">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 justify-between">
           <div className="flex items-center">
@@ -93,9 +92,7 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-
             <ThemeToggler />
-
             {authenticated ? (
               <div className="relative">
                 <button
@@ -109,6 +106,7 @@ const Navbar = () => {
                     alt="User"
                     className="h-8 w-8 rounded-full border-2 border-purple-500 object-cover"
                   />
+
                   <span className="font-medium">{user?.username}</span>
                 </button>
 
@@ -122,14 +120,6 @@ const Navbar = () => {
                         {user?.email}
                       </p>
                     </div>
-
-                    <button
-                      onClick={() => handleUserMenuItemClick("/dashboard")}
-                      className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
-                    >
-                      <User size={16} className="mr-2" />
-                      Dashboard
-                    </button>
 
                     <button
                       onClick={() => handleUserMenuItemClick("/profile")}

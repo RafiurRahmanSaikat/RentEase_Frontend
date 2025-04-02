@@ -1,11 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import CardGrid from "../components/sections/CardGrid.jsx";
-import SectionContainer from "../components/sections/SectionContainer.jsx";
-import Timeline from "../components/sections/Timeline.jsx";
-import Button from "../components/ui/Button.jsx";
-import Card from "../components/ui/Card.jsx";
-import { ABOUT_US } from "../constants/index.jsx";
+import { Button, Card, SectionContainer, Timeline } from "../components";
+import { ABOUT_US } from "../constants";
 
 const HeroSection = ({ title, subtitle, image, className = "" }) => {
   return (
@@ -104,10 +100,8 @@ const AboutPage = () => {
         subtitle="These core principles guide everything we do at RentEase"
         centered
       >
-        <CardGrid
-          items={ABOUT_US.values}
-          columns={4}
-          renderItem={(value, index) => (
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          {ABOUT_US.values.map((value, index) => (
             <Card
               key={index}
               className="border-0 p-6 text-center shadow-lg transition-all duration-300 hover:shadow-xl dark:bg-zinc-700/50"
@@ -125,8 +119,8 @@ const AboutPage = () => {
                 {value.description}
               </p>
             </Card>
-          )}
-        />
+          ))}
+        </div>
       </SectionContainer>
 
       {/* Our Team Section */}
@@ -136,10 +130,8 @@ const AboutPage = () => {
         subtitle="The passionate people behind RentEase"
         centered
       >
-        <CardGrid
-          items={ABOUT_US.team}
-          columns={4}
-          renderItem={(member, index) => (
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+          {ABOUT_US.team.map((member, index) => (
             <Card
               key={index}
               className="group overflow-hidden border-0 shadow-lg transition-all duration-300 hover:shadow-xl dark:bg-zinc-800/50"
@@ -163,8 +155,8 @@ const AboutPage = () => {
                 </p>
               </div>
             </Card>
-          )}
-        />
+          ))}
+        </div>
       </SectionContainer>
 
       {/* Timeline Section */}

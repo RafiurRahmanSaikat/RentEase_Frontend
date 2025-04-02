@@ -1,14 +1,11 @@
+import { Search } from "lucide-react";
+import React, { useState } from "react";
+import { CAROUSEL_IMAGES } from "../../constants";
 
-
-
-import { Search } from 'lucide-react';
-import React, { useState } from 'react';
-import { CAROUSEL_IMAGES } from '../../constants/index.jsx';
-import Button from '../ui/Button.jsx';
-import ImageCarousel from '../ui/ImageCarousel.jsx';
+import { Button, ImageCarousel } from "../../components";
 
 const HeroSection = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -18,25 +15,25 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="py-10 md:py-24 overflow-hidden">
+    <section className="overflow-hidden py-10 md:py-24">
       {/* Background Pattern */}
 
-
-      <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+      <div className="relative mx-auto max-w-[90vw] px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center gap-8 lg:flex-row lg:gap-12">
           {/* Left side - Text and Search */}
-          <div className="w-full lg:w-1/2 text-left">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+          <div className="w-full text-left lg:w-1/2">
+            <h1 className="mb-6 text-4xl font-bold md:text-5xl lg:text-6xl">
               Find Your Perfect Rental Home
             </h1>
-            <p className="text-lg md:text-xl mb-8  max-w-xl">
-              Discover thousands of rental properties in top locations. Your dream home is just a few clicks away.
+            <p className="mb-8 max-w-xl text-lg md:text-xl">
+              Discover thousands of rental properties in top locations. Your
+              dream home is just a few clicks away.
             </p>
 
             <form onSubmit={handleSearch} className="max-w-md">
-              <div className="flex flex-col sm:flex-row gap-2">
+              <div className="flex flex-col gap-2 sm:flex-row">
                 <div className="relative flex-1">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                     <Search size={20} className="text-gray-400" />
                   </div>
                   <input
@@ -44,10 +41,13 @@ const HeroSection = () => {
                     placeholder="Search by location, property type..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent shadow-lg"
+                    className="w-full rounded-lg py-3 pl-10 pr-4 text-gray-900 shadow-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-500"
                   />
                 </div>
-                <Button type="submit" className="py-3 px-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                <Button
+                  type="submit"
+                  className="px-6 py-3 shadow-lg transition-all duration-300 hover:shadow-xl"
+                >
                   Search
                 </Button>
               </div>
@@ -55,8 +55,8 @@ const HeroSection = () => {
           </div>
 
           {/* Right side - Image Carousel */}
-          <div className="w-full lg:w-1/2 mt-8 lg:mt-0">
-            <div className="rounded-xl overflow-hidden shadow-2xl">
+          <div className="mt-8 w-full lg:mt-0 lg:w-1/2">
+            <div className="overflow-hidden rounded-xl shadow-2xl">
               <ImageCarousel
                 images={CAROUSEL_IMAGES}
                 autoPlay={true}
@@ -69,7 +69,6 @@ const HeroSection = () => {
       </div>
 
       {/* Animated Wave */}
-
     </section>
   );
 };

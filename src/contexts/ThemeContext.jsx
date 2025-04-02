@@ -23,7 +23,9 @@ export const ThemeProvider = ({ children }) => {
         setDarkMode(savedTheme === "true");
       } else {
         // Otherwise, check the system preference
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
         setDarkMode(prefersDark);
       }
     }
@@ -57,7 +59,11 @@ export const ThemeProvider = ({ children }) => {
     return null; // Or a loading spinner if you prefer
   }
 
-  return <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 };
 
 // Custom hook for using the theme context
@@ -68,3 +74,5 @@ export const useTheme = () => {
   }
   return context;
 };
+
+export default ThemeContext;

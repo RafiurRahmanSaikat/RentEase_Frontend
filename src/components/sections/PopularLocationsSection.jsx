@@ -1,52 +1,162 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { POPULAR_LOCATIONS } from '../../constants/index.jsx';
+import React from "react";
+import { Link } from "react-router-dom";
+import { POPULAR_LOCATIONS } from "../../constants";
 
 const PopularLocationsSection = () => {
-  // Function to determine the span class for each item in the bento grid
-  const getSpanClass = (index) => {
-    // Create a varied grid layout
-    switch (index % 6) {
-      case 0: return 'col-span-2 row-span-2'; // Large item
-      case 1: return 'col-span-1 row-span-1'; // Small item
-      case 2: return 'col-span-1 row-span-1'; // Small item
-      case 3: return 'col-span-1 row-span-2'; // Tall item
-      case 4: return 'col-span-2 row-span-1'; // Wide item
-      case 5: return 'col-span-1 row-span-1'; // Small item
-      default: return 'col-span-1 row-span-1';
-    }
-  };
-
   return (
-    <section className="py-16 ">
-      <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">Popular Locations</h2>
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+    <section className="py-16">
+      <div className="mx-auto w-[90%]">
+        <div className="mb-12 text-center">
+          <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
+            Popular Locations
+          </h2>
+          <div className="mx-auto mb-4 h-1 w-20 rounded-full bg-gradient-to-r from-blue-500 to-purple-600"></div>
+          <p className="mx-auto max-w-2xl text-gray-600 dark:text-gray-300">
             Discover rental properties in these top cities across the country
           </p>
         </div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[180px]">
-          {POPULAR_LOCATIONS.map((city, index) => (
+        {/* Fixed Grid Layout with Relative Units */}
+        <div className="grid grid-cols-12 gap-4">
+          {/* New York - Large Left Card */}
+          <div className="col-span-12 md:col-span-6 lg:col-span-6">
             <Link
-              key={city.id}
-              to={`/houses?location=${encodeURIComponent(city.name)}`}
-              className={`${getSpanClass(index)} group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300`}
+              to={`/houses?location=${encodeURIComponent(POPULAR_LOCATIONS[0].name)}`}
+              className="group relative block aspect-[4/3] w-full overflow-hidden rounded-xl shadow-md transition-all duration-300 hover:shadow-xl"
             >
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-300"></div>
+              <div className="absolute inset-0 bg-black/40 transition-all duration-300 group-hover:bg-black/50"></div>
               <img
-                src={city.image || "/placeholder.svg"}
-                alt={city.name}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                src={POPULAR_LOCATIONS[0].image || "/placeholder.svg"}
+                alt={POPULAR_LOCATIONS[0].name}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
-                <h3 className="text-xl md:text-2xl font-bold mb-1">{city.name}</h3>
-                <p className="text-sm md:text-base">{city.count} Properties</p>
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-white">
+                <h3 className="mb-1 text-2xl font-bold">
+                  {POPULAR_LOCATIONS[0].name}
+                </h3>
+                <p>{POPULAR_LOCATIONS[0].count} Properties</p>
               </div>
             </Link>
-          ))}
+          </div>
+
+          {/* Right Top Section */}
+          <div className="col-span-12 md:col-span-6 lg:col-span-6">
+            <div className="grid grid-cols-12 gap-4">
+              {/* Los Angeles */}
+              <div className="col-span-12 sm:col-span-6">
+                <Link
+                  to={`/houses?location=${encodeURIComponent(POPULAR_LOCATIONS[1].name)}`}
+                  className="group relative block aspect-[3/2] w-full overflow-hidden rounded-xl shadow-md transition-all duration-300 hover:shadow-xl"
+                >
+                  <div className="absolute inset-0 bg-black/40 transition-all duration-300 group-hover:bg-black/50"></div>
+                  <img
+                    src={POPULAR_LOCATIONS[1].image || "/placeholder.svg"}
+                    alt={POPULAR_LOCATIONS[1].name}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-white">
+                    <h3 className="mb-1 text-xl font-bold">
+                      {POPULAR_LOCATIONS[1].name}
+                    </h3>
+                    <p className="text-sm">
+                      {POPULAR_LOCATIONS[1].count} Properties
+                    </p>
+                  </div>
+                </Link>
+              </div>
+
+              {/* Chicago */}
+              <div className="col-span-12 sm:col-span-6">
+                <Link
+                  to={`/houses?location=${encodeURIComponent(POPULAR_LOCATIONS[2].name)}`}
+                  className="group relative block aspect-[3/2] w-full overflow-hidden rounded-xl shadow-md transition-all duration-300 hover:shadow-xl"
+                >
+                  <div className="absolute inset-0 bg-black/40 transition-all duration-300 group-hover:bg-black/50"></div>
+                  <img
+                    src={POPULAR_LOCATIONS[2].image || "/placeholder.svg"}
+                    alt={POPULAR_LOCATIONS[2].name}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-white">
+                    <h3 className="mb-1 text-xl font-bold">
+                      {POPULAR_LOCATIONS[2].name}
+                    </h3>
+                    <p className="text-sm">
+                      {POPULAR_LOCATIONS[2].count} Properties
+                    </p>
+                  </div>
+                </Link>
+              </div>
+
+              {/* Miami */}
+              <div className="col-span-12">
+                <Link
+                  to={`/houses?location=${encodeURIComponent(POPULAR_LOCATIONS[3].name)}`}
+                  className="group relative block aspect-[16/6] w-full overflow-hidden rounded-xl shadow-md transition-all duration-300 hover:shadow-xl"
+                >
+                  <div className="absolute inset-0 bg-black/40 transition-all duration-300 group-hover:bg-black/50"></div>
+                  <img
+                    src={POPULAR_LOCATIONS[3].image || "/placeholder.svg"}
+                    alt={POPULAR_LOCATIONS[3].name}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-white">
+                    <h3 className="mb-1 text-xl font-bold">
+                      {POPULAR_LOCATIONS[3].name}
+                    </h3>
+                    <p className="text-sm">
+                      {POPULAR_LOCATIONS[3].count} Properties
+                    </p>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Section */}
+          <div className="col-span-12 md:col-span-6 lg:col-span-6">
+            <Link
+              to={`/houses?location=${encodeURIComponent(POPULAR_LOCATIONS[4].name)}`}
+              className="group relative block aspect-[16/6] w-full overflow-hidden rounded-xl shadow-md transition-all duration-300 hover:shadow-xl"
+            >
+              <div className="absolute inset-0 bg-black/40 transition-all duration-300 group-hover:bg-black/50"></div>
+              <img
+                src={POPULAR_LOCATIONS[4].image || "/placeholder.svg"}
+                alt={POPULAR_LOCATIONS[4].name}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-white">
+                <h3 className="mb-1 text-xl font-bold">
+                  {POPULAR_LOCATIONS[4].name}
+                </h3>
+                <p className="text-sm">
+                  {POPULAR_LOCATIONS[4].count} Properties
+                </p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="col-span-12 md:col-span-6 lg:col-span-6">
+            <Link
+              to={`/houses?location=${encodeURIComponent(POPULAR_LOCATIONS[5].name)}`}
+              className="group relative block aspect-[16/6] w-full overflow-hidden rounded-xl shadow-md transition-all duration-300 hover:shadow-xl"
+            >
+              <div className="absolute inset-0 bg-black/40 transition-all duration-300 group-hover:bg-black/50"></div>
+              <img
+                src={POPULAR_LOCATIONS[5].image || "/placeholder.svg"}
+                alt={POPULAR_LOCATIONS[5].name}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-white">
+                <h3 className="mb-1 text-xl font-bold">
+                  {POPULAR_LOCATIONS[5].name}
+                </h3>
+                <p className="text-sm">
+                  {POPULAR_LOCATIONS[5].count} Properties
+                </p>
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

@@ -1,0 +1,9 @@
+export { default as AboutPage } from "./AboutPage";
+export { default as ContactPage } from "./ContactPage";
+export { default as AdminDashboard } from "./dashboard/AdminDashboard";
+export { default as UserDashboard } from "./dashboard/UserDashboard";
+export { default as HomePage } from "./HomePage";
+export { default as HouseDetailPage } from "./HouseDetailPage";
+export { default as HousesPage } from "./HousesPage";
+export { default as ProfileEditPage } from "./profile/ProfileEditPage";
+export { default as ChangePasswordPage } from "./profile/ChangePasswordPage";

@@ -1,11 +1,6 @@
-"use client"
-
-import { CheckCircle, Send } from "lucide-react"
-import { useState } from "react"
-import Button from "../ui/Button.jsx"
-import Card from "../ui/Card.jsx"
-import Input from "../ui/Input.jsx"
-import Textarea from "../ui/Textarea.jsx"
+import { CheckCircle, Send } from "lucide-react";
+import { useState } from "react";
+import { Button, Card, Input, Textarea } from "../ui";
 
 const ContactForm = ({ title, subtitle, submitText = "Send Message" }) => {
   const [formData, setFormData] = useState({
@@ -14,90 +9,98 @@ const ContactForm = ({ title, subtitle, submitText = "Send Message" }) => {
     phone: "",
     subject: "",
     message: "",
-  })
-  const [errors, setErrors] = useState({})
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
+  });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
 
     // Clear error when user types
     if (errors[name]) {
-      setErrors({ ...errors, [name]: "" })
+      setErrors({ ...errors, [name]: "" });
     }
-  }
+  };
 
   const validateForm = () => {
-    const newErrors = {}
+    const newErrors = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "Name is required"
+      newErrors.name = "Name is required";
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required"
+      newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid"
+      newErrors.email = "Email is invalid";
     }
 
     if (!formData.subject.trim()) {
-      newErrors.subject = "Subject is required"
+      newErrors.subject = "Subject is required";
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = "Message is required"
+      newErrors.message = "Message is required";
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (!validateForm()) return
+    if (!validateForm()) return;
 
-    setLoading(true)
+    setLoading(true);
 
     // Simulate API call
     setTimeout(() => {
-      setLoading(false)
-      setSuccess(true)
+      setLoading(false);
+      setSuccess(true);
 
       // Reset form after 5 seconds
       setTimeout(() => {
-        setSuccess(false)
+        setSuccess(false);
         setFormData({
           name: "",
           email: "",
           phone: "",
           subject: "",
           message: "",
-        })
-      }, 5000)
-    }, 1500)
-  }
+        });
+      }, 5000);
+    }, 1500);
+  };
 
   return (
-    <Card className="p-6 border-0 shadow-lg dark:bg-zinc-700/50">
-      <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mb-2">{title}</h2>
-      <p className="text-zinc-600 dark:text-zinc-300 mb-6">{subtitle}</p>
+    <Card className="border-0 p-6 shadow-lg dark:bg-zinc-700/50">
+      <h2 className="mb-2 text-2xl font-bold text-zinc-900 dark:text-white">
+        {title}
+      </h2>
+      <p className="mb-6 text-zinc-600 dark:text-zinc-300">{subtitle}</p>
 
       {success ? (
-        <div className="text-center py-8">
-          <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 dark:bg-green-900/30 mb-4">
-            <CheckCircle size={32} className="text-green-600 dark:text-green-400" />
+        <div className="py-8 text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
+            <CheckCircle
+              size={32}
+              className="text-green-600 dark:text-green-400"
+            />
           </div>
-          <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-2">Message Sent!</h3>
+          <h3 className="mb-2 text-xl font-semibold text-zinc-900 dark:text-white">
+            Message Sent!
+          </h3>
           <p className="text-zinc-600 dark:text-zinc-300">
-            Thank you for contacting us. We'll get back to you as soon as possible.
+            Thank you for contacting us. We'll get back to you as soon as
+            possible.
           </p>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Input
               label="Full Name"
               name="name"
@@ -122,7 +125,7 @@ const ContactForm = ({ title, subtitle, submitText = "Send Message" }) => {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Input
               type="tel"
               label="Phone Number (Optional)"
@@ -168,7 +171,7 @@ const ContactForm = ({ title, subtitle, submitText = "Send Message" }) => {
               {loading ? (
                 <span className="flex items-center">
                   <svg
-                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                    className="-ml-1 mr-2 h-4 w-4 animate-spin text-white"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -191,7 +194,10 @@ const ContactForm = ({ title, subtitle, submitText = "Send Message" }) => {
                 </span>
               ) : (
                 <span className="flex items-center">
-                  <Send size={18} className="mr-2 group-hover:translate-x-1 transition-transform duration-300" />
+                  <Send
+                    size={18}
+                    className="mr-2 transition-transform duration-300 group-hover:translate-x-1"
+                  />
                   {submitText}
                 </span>
               )}
@@ -200,8 +206,7 @@ const ContactForm = ({ title, subtitle, submitText = "Send Message" }) => {
         </form>
       )}
     </Card>
-  )
-}
+  );
+};
 
-export default ContactForm
-
+export default ContactForm;
