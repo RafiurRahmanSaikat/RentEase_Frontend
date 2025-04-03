@@ -61,8 +61,8 @@ const RentRequestForm = ({ house, onRequestSubmitted }) => {
 
   return (
     <Card className="sticky top-24">
-      <div className="mb-4 border-b border-gray-200 pb-4 dark:border-gray-700">
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+      <div className="mb-4 border-b border-zinc-200 pb-4 dark:border-zinc-700">
+        <h3 className="text-xl font-semibold text-zinc-900 dark:text-white">
           Request to Rent
         </h3>
         <div className="mt-2 flex items-center">
@@ -70,10 +70,10 @@ const RentRequestForm = ({ house, onRequestSubmitted }) => {
             size={20}
             className="text-purple-600 dark:text-purple-400"
           />
-          <span className="text-2xl font-bold text-gray-900 dark:text-white">
+          <span className="text-2xl font-bold text-zinc-900 dark:text-white">
             ${Number.parseFloat(house.price).toLocaleString()}
           </span>
-          <span className="ml-1 text-gray-500 dark:text-gray-400">/ day</span>
+          <span className="ml-1 text-zinc-500 dark:text-zinc-400">/ day</span>
         </div>
       </div>
 
@@ -84,7 +84,7 @@ const RentRequestForm = ({ house, onRequestSubmitted }) => {
           value={formData.duration}
           onChange={handleInputChange}
           options={RENT_DURATIONS}
-          icon={<Calendar size={18} className="text-gray-400" />}
+          icon={<Calendar size={18} className="text-zinc-400" />}
           required
         />
 
@@ -97,23 +97,23 @@ const RentRequestForm = ({ house, onRequestSubmitted }) => {
           required
         />
 
-        <div className="mt-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+        <div className="mt-4 rounded-lg bg-gray-50 p-4 dark:bg-zinc-700">
           <div className="mb-2 flex justify-between">
-            <span className="text-gray-600 dark:text-gray-300">
+            <span className="text-zinc-600 dark:text-zinc-300">
               Price per day
             </span>
-            <span className="font-medium text-gray-900 dark:text-white">
+            <span className="font-medium text-zinc-900 dark:text-white">
               ${Number.parseFloat(house.price).toLocaleString()}
             </span>
           </div>
           <div className="mb-2 flex justify-between">
-            <span className="text-gray-600 dark:text-gray-300">Duration</span>
-            <span className="font-medium text-gray-900 dark:text-white">
+            <span className="text-zinc-600 dark:text-zinc-300">Duration</span>
+            <span className="font-medium text-zinc-900 dark:text-white">
               {formData.duration} days
             </span>
           </div>
           <div className="flex justify-between border-t border-gray-200 pt-2 dark:border-gray-700">
-            <span className="font-semibold text-gray-900 dark:text-white">
+            <span className="font-semibold text-zinc-900 dark:text-white">
               Total
             </span>
             <span className="font-bold text-purple-600 dark:text-purple-400">
@@ -137,7 +137,7 @@ const RentRequestForm = ({ house, onRequestSubmitted }) => {
           {isSubmitting ? "Submitting..." : "Submit Rent Request"}
         </Button>
 
-        <p className="mt-3 text-center text-xs text-gray-500 dark:text-gray-400">
+        <p className="mt-3 text-center text-xs text-zinc-500 dark:text-zinc-400">
           You won't be charged yet. The owner will review your request first.
         </p>
       </form>

@@ -1,4 +1,3 @@
-// services/api.js
 import axios from "axios";
 import { BASE_URL } from "../constants";
 
@@ -10,13 +9,14 @@ const api = axios.create({
   },
 });
 
-// Request interceptor to add auth token to requests
+// Add logging for request URL
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("access_token");
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
+    console.log(`Making request to: ${config.baseURL}${config.url}`);
     return config;
   },
   (error) => Promise.reject(error),
@@ -26,8 +26,14 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
+    console.error(
+      "API error response:",
+      error.response?.status,
+      error.response?.data,
+    );
+
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem("refresh_token");

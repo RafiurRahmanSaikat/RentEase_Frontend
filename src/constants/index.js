@@ -80,12 +80,25 @@ export const ADMIN_NAV_LINKS = [
 ];
 
 // House Categories (for filters)
+
+// Price ranges for filtering
 export const PRICE_RANGES = [
-  { label: "Under $1,000", min: 0, max: 1000 },
-  { label: "$1,000 - $2,000", min: 1000, max: 2000 },
-  { label: "$2,000 - $5,000", min: 2000, max: 5000 },
-  { label: "$5,000 - $10,000", min: 5000, max: 10000 },
-  { label: "Above $10,000", min: 10000, max: 1000000 },
+  { label: "Under $100", min: 0, max: 100 },
+  { label: "$100 - $200", min: 100, max: 200 },
+  { label: "$200 - $500", min: 200, max: 500 },
+  { label: "$500 - $1000", min: 500, max: 1000 },
+  { label: "Over $1000", min: 1000, max: 999999 },
+];
+
+// Page size for pagination
+export const PAGE_SIZE = 12;
+
+// Default sorting options
+export const SORT_OPTIONS = [
+  { value: "price_asc", label: "Price: Low to High" },
+  { value: "price_desc", label: "Price: High to Low" },
+  { value: "newest", label: "Newest First" },
+  { value: "rating", label: "Highest Rated" },
 ];
 
 // Rent durations
@@ -120,15 +133,6 @@ export const AMENITIES = [
   { id: "8", name: "Water Supply", icon: Droplet },
   { id: "9", name: "Electricity", icon: Zap },
   { id: "10", name: "Waste Disposal", icon: Trash2 },
-];
-
-// Sort Options
-export const SORT_OPTIONS = [
-  { value: "newest", label: "Newest First" },
-  { value: "oldest", label: "Oldest First" },
-  { value: "price_low", label: "Price: Low to High" },
-  { value: "price_high", label: "Price: High to Low" },
-  { value: "rating", label: "Highest Rated" },
 ];
 
 // Popular Locations

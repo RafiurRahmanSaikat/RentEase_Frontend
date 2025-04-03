@@ -1,37 +1,65 @@
-// services/houseService.js
 import { API_ENDPOINTS } from "../constants";
 import api from "./api";
 
 // Get all houses (paginated)
 export const getHouses = async (page = 1, filters = {}) => {
   try {
-    let url = `${API_ENDPOINTS.HOUSES}?page=${page}`;
-    if (filters.category) url += `&category=${filters.category}`;
-    if (filters.minPrice) url += `&min_price=${filters.minPrice}`;
-    if (filters.maxPrice) url += `&max_price=${filters.maxPrice}`;
-    if (filters.location) url += `&location=${filters.location}`;
-    if (filters.search) url += `&search=${filters.search}`;
+    let url = `${API_ENDPOINTS.HOUSES}`;
+    const params = new URLSearchParams();
+    params.append("page", page);
 
+    if (filters.category) params.append("category", filters.category);
+    if (filters.minPrice) params.append("min_price", filters.minPrice);
+    if (filters.maxPrice) params.append("max_price", filters.maxPrice);
+    if (filters.location) params.append("location", filters.location);
+    if (filters.search) params.append("search", filters.search);
+
+    const queryString = params.toString();
+    if (queryString) {
+      url = `${url}?${queryString}`;
+    }
+
+    console.log("API Request URL:", url);
     const response = await api.get(url);
     return response.data;
   } catch (error) {
+    console.error("Error fetching houses:", error);
+    console.error("Request URL:", error.config?.url);
     throw error.response?.data || { message: "Failed to fetch houses" };
   }
 };
-
 // Get all houses (all pages)
 export const getAllHouses = async (filters = {}) => {
   try {
-    let url = `${API_ENDPOINTS.HOUSES}?page=all`;
-    if (filters.category) url += `&category=${filters.category}`;
-    if (filters.minPrice) url += `&min_price=${filters.minPrice}`;
-    if (filters.maxPrice) url += `&max_price=${filters.maxPrice}`;
-    if (filters.location) url += `&location=${filters.location}`;
-    if (filters.search) url += `&search=${filters.search}`;
+    // Create URL with query parameters
+    const params = new URLSearchParams();
+
+    // Add the 'all' page parameter
+    params.append("page", "all");
+
+    // Add filter parameters
+    if (filters.category) params.append("category", filters.category);
+
+    if (filters.minPrice || filters.min_price) {
+      params.append("min_price", filters.minPrice || filters.min_price);
+    }
+    if (filters.maxPrice || filters.max_price) {
+      params.append("max_price", filters.maxPrice || filters.max_price);
+    }
+
+    if (filters.location) params.append("location", filters.location);
+    if (filters.search) params.append("search", filters.search);
+
+    // Add query string to URL
+    const url = `${API_ENDPOINTS.HOUSES}?${params.toString()}`;
+
+    console.log("API Request URL (All):", url); // Debug log for URL
 
     const response = await api.get(url);
     return response.data;
   } catch (error) {
+    console.error("Error fetching all houses:", error);
+    console.error("Request URL:", error.config?.url);
     throw error.response?.data || { message: "Failed to fetch houses" };
   }
 };
@@ -42,6 +70,7 @@ export const getHouseById = async (id) => {
     const response = await api.get(`${API_ENDPOINTS.HOUSES}${id}/`);
     return response.data;
   } catch (error) {
+    console.error("Error fetching house details:", error);
     throw error.response?.data || { message: "Failed to fetch house details" };
   }
 };
@@ -56,7 +85,7 @@ export const createHouse = async (houseData) => {
   }
 };
 
-// Update a house listing
+// Update house listing
 export const updateHouse = async (id, houseData) => {
   try {
     const response = await api.put(`${API_ENDPOINTS.HOUSES}${id}/`, houseData);
@@ -80,7 +109,7 @@ export const submitHouseForApproval = async (id) => {
   }
 };
 
-// Approve house (admin only)
+// Approve house listing
 export const approveHouse = async (id) => {
   try {
     const response = await api.post(`${API_ENDPOINTS.HOUSES}${id}/approve/`);
@@ -90,7 +119,7 @@ export const approveHouse = async (id) => {
   }
 };
 
-// Get all categories
+// Get categories with pagination
 export const getCategories = async (page = 1) => {
   try {
     const response = await api.get(`${API_ENDPOINTS.CATEGORIES}?page=${page}`);
@@ -100,7 +129,7 @@ export const getCategories = async (page = 1) => {
   }
 };
 
-// Create a category (admin only)
+// Create a new category
 export const createCategory = async (categoryData) => {
   try {
     const response = await api.post(API_ENDPOINTS.CATEGORIES, categoryData);
