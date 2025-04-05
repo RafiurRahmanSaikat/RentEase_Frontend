@@ -1,6 +1,5 @@
 import {
   Facebook,
-  Home,
   Instagram,
   Linkedin,
   Mail,
@@ -18,7 +17,7 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="mb-4 flex items-center">
-              <Home className="h-8 w-8 text-purple-400" />
+              <img className="h-8 w-8" src="/logo.png" alt="" />
               <span className="ml-2 text-xl font-bold">RentEase</span>
             </div>
             <p className="mb-4">

@@ -1,21 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
 import { AlertCircle, Eye, EyeOff, Lock, LogIn, User } from "lucide-react";
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { DEMO_USERS } from "../../constants/index.js";
 import { login } from "../../services/authService.js";
 
-import Badge from "../ui/Badge.jsx";
-import Button from "../ui/Button.jsx";
-import Card from "../ui/Card.jsx";
-import Input from "../ui/Input.jsx";
+import { Badge, Button, Card, Input } from "../../components";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [generalError, setGeneralError] = useState("");
@@ -23,55 +17,32 @@ const Login = () => {
   const [showDemoAccounts, setShowDemoAccounts] = useState(false);
 
   const navigate = useNavigate();
-  const location = useLocation();
-
-  // Get redirect path from location state or default to home
-  const from = location.state?.from?.pathname || "/dashboard";
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-
-    // Clear error when user types
-    if (errors[name]) {
-      setErrors({ ...errors, [name]: "" });
-    }
-
-    if (generalError) {
-      setGeneralError("");
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+    if (generalError) setGeneralError("");
   };
 
   const validateForm = () => {
     const newErrors = {};
-
-    if (!formData.username.trim()) {
-      newErrors.username = "Username is required";
-    }
-
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    }
-
+    if (!formData.username.trim()) newErrors.username = "Username is required";
+    if (!formData.password) newErrors.password = "Password is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
-    if (e) e.preventDefault();
-
-    if (!validateForm()) return;
-
+  // Single login handler for both regular and demo accounts
+  const handleLogin = async (credentials) => {
     setLoading(true);
     setGeneralError("");
-
     try {
-      await login(formData);
-      toast?.success(`Logged in as ${formData.username} successfully!`);
-      navigate(from, { replace: true });
+      await login(credentials);
+      toast?.success(`Logged in as ${credentials.username} successfully!`);
+      navigate("/");
     } catch (error) {
       console.error("Login error:", error);
-
       if (error.non_field_errors) {
         setGeneralError(error.non_field_errors[0]);
       } else if (error.detail) {
@@ -83,46 +54,16 @@ const Login = () => {
           "Login failed. Please check your credentials and try again.",
         );
       }
-
       toast?.error("Login failed. Please check your credentials.");
     } finally {
       setLoading(false);
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleDemoAccounts = () => {
-    setShowDemoAccounts(!showDemoAccounts);
-  };
-
-  const handleDemoLogin = (username, password) => {
-    setFormData({ username, password });
-    setLoading(true);
-    setGeneralError("");
-
-    try {
-      login({ username, password })
-        .then(() => {
-          toast?.success(`Logged in as ${username} successfully!`);
-          navigate(from, { replace: true });
-        })
-        .catch((error) => {
-          console.error("Demo login error:", error);
-          setGeneralError("Demo login failed. Please try again.");
-          toast?.error("Demo login failed. Please try again.");
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    } catch (error) {
-      console.error("Demo login error:", error);
-      setGeneralError("Demo login failed. Please try again.");
-      toast?.error("Demo login failed. Please try again.");
-      setLoading(false);
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    handleLogin(formData);
   };
 
   return (
@@ -173,7 +114,7 @@ const Login = () => {
               />
               <button
                 type="button"
-                onClick={togglePasswordVisibility}
+                onClick={() => setShowPassword((prev) => !prev)}
                 className="absolute right-3 top-[38px] text-gray-500 hover:text-gray-700 focus:outline-none dark:text-gray-400 dark:hover:text-gray-200"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
@@ -262,7 +203,7 @@ const Login = () => {
               variant="outline"
               fullWidth
               className="mt-4 transition-all duration-300"
-              onClick={toggleDemoAccounts}
+              onClick={() => setShowDemoAccounts((prev) => !prev)}
             >
               {showDemoAccounts ? "Hide Demo Accounts" : "Try Demo Accounts"}
             </Button>
@@ -289,7 +230,10 @@ const Login = () => {
                       size="sm"
                       fullWidth
                       onClick={() =>
-                        handleDemoLogin(user.username, user.password)
+                        handleLogin({
+                          username: user.username,
+                          password: user.password,
+                        })
                       }
                     >
                       Login as {user.username}
@@ -310,11 +254,10 @@ const Login = () => {
               Sign up
             </Link>
           </p>
+
           <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-            All demo accounts use the password:{" "}
-            <span className="rounded bg-gray-100 px-1 py-0.5 font-mono dark:bg-gray-800">
-              password123
-            </span>
+            All demo accounts use the password :{" "}
+            <Badge variant="warning">password123</Badge>
           </p>
         </div>
       </div>

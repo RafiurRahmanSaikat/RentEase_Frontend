@@ -8,8 +8,6 @@ import { isAdmin, isAuthenticated } from "../services/authService";
 
 import {
   AboutPage,
-  AdminDashboard,
-  ChangePasswordPage,
   ContactPage,
   ForgotPassword,
   HomePage,
@@ -20,8 +18,19 @@ import {
   Register,
   ResetPassword,
   RootLayout,
-  UserDashboard,
 } from "../components";
+
+// Admin Dashboard Components
+import CategoriesManagement from "../components/dashboard/CategoriesManagement";
+import HousesManagement from "../components/dashboard/HousesManagement";
+import Overview from "../components/dashboard/Overview";
+import RentRequestsManagement from "../components/dashboard/RentRequestsManagement";
+import UsersManagement from "../components/dashboard/UsersManagement";
+import AdminDashboard from "../pages/dashboard/AdminDashboard";
+
+// User Dashboard Components
+import UserDashboard from "../pages/dashboard/UserDashboard";
+import ChangePasswordPage from "../pages/profile/ChangePasswordPage";
 
 // Protected Route component
 const ProtectedRoute = ({ children, requireAdmin = false }) => {
@@ -53,20 +62,12 @@ const router = createBrowserRouter(
       <Route path="about" element={<AboutPage />} />
       <Route path="contact" element={<ContactPage />} />
 
-      {/* Protected Routes */}
+      {/* User Dashboard Routes */}
       <Route
         path="dashboard"
         element={
           <ProtectedRoute>
             <UserDashboard />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="admin"
-        element={
-          <ProtectedRoute requireAdmin={true}>
-            <AdminDashboard />
           </ProtectedRoute>
         }
       />
@@ -110,6 +111,30 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       />
+      <Route
+        path="my-houses"
+        element={
+          <ProtectedRoute>
+            <UserDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Admin Dashboard Routes */}
+      <Route
+        path="admin"
+        element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Overview />} />
+        <Route path="users" element={<UsersManagement />} />
+        <Route path="houses" element={<HousesManagement />} />
+        <Route path="rent-requests" element={<RentRequestsManagement />} />
+        <Route path="categories" element={<CategoriesManagement />} />
+      </Route>
 
       {/* 404 Page */}
       <Route path="*" element={<div>Page Not Found</div>} />

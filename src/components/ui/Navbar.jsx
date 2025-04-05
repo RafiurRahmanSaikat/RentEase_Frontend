@@ -1,7 +1,6 @@
 import {
   Clock,
   Heart,
-  Home,
   LogOut,
   Menu,
   Search,
@@ -12,12 +11,7 @@ import {
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { NAV_LINKS } from "../../constants";
-import {
-  getCurrentUser,
-  isAdmin,
-  isAuthenticated,
-  logout,
-} from "../../services/authService";
+import { getCurrentUser, logout } from "../../services/authService";
 import { Button, ThemeToggler } from "../ui";
 
 const Navbar = () => {
@@ -27,8 +21,8 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const user = getCurrentUser();
-  const authenticated = isAuthenticated();
-  const admin = isAdmin();
+
+  // console.log(user);
 
   const handleLogout = () => {
     logout();
@@ -56,7 +50,8 @@ const Navbar = () => {
         <div className="flex h-16 justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex flex-shrink-0 items-center">
-              <Home className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+              <img className="h-8 w-8" src="/logo.png" alt="" />
+
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
                 RentEase
               </span>
@@ -92,8 +87,17 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <ThemeToggler />
-            {authenticated ? (
+
+            {user && (
+              <Link
+                to={user.role == "admin" ? "/admin" : "/dashboard"}
+                className="rounded-md px-3 py-2 text-sm font-medium hover:text-purple-500 dark:hover:text-purple-500"
+              >
+                Dashboard
+              </Link>
+            )}
+
+            {user ? (
               <div className="relative">
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
@@ -106,7 +110,6 @@ const Navbar = () => {
                     alt="User"
                     className="h-8 w-8 rounded-full border-2 border-purple-500 object-cover"
                   />
-
                   <span className="font-medium">{user?.username}</span>
                 </button>
 
@@ -137,27 +140,6 @@ const Navbar = () => {
                       My Favorites
                     </button>
 
-                    <button
-                      onClick={() => handleUserMenuItemClick("/rent-requests")}
-                      className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
-                    >
-                      <Clock size={16} className="mr-2" />
-                      My Rent Requests
-                    </button>
-
-                    {admin && (
-                      <>
-                        <div className="my-1 border-t border-gray-200 dark:border-gray-700"></div>
-                        <button
-                          onClick={() => handleUserMenuItemClick("/admin")}
-                          className="flex w-full items-center px-4 py-2 text-sm text-purple-600 hover:bg-gray-100 dark:text-purple-400 dark:hover:bg-gray-700"
-                        >
-                          <Settings size={16} className="mr-2" />
-                          Admin Dashboard
-                        </button>
-                      </>
-                    )}
-
                     <div className="my-1 border-t border-gray-200 dark:border-gray-700"></div>
 
                     <button
@@ -182,8 +164,8 @@ const Navbar = () => {
                 </Link>
               </div>
             )}
+            <ThemeToggler />
           </div>
-
           {/* Mobile menu button */}
           <div className="flex items-center md:hidden">
             <ThemeToggler className="mr-2" />
@@ -228,7 +210,7 @@ const Navbar = () => {
               </Link>
             ))}
 
-            {authenticated ? (
+            {user ? (
               <>
                 <div className="mt-4 border-t border-gray-200 pt-4 dark:border-gray-700">
                   <div className="flex items-center px-3 py-2">
@@ -281,7 +263,7 @@ const Navbar = () => {
                     My Rent Requests
                   </Link>
 
-                  {admin && (
+                  {user.role == "admin" && (
                     <Link
                       to="/admin"
                       className="flex items-center rounded-md px-3 py-2 text-base font-medium text-purple-600 hover:bg-gray-100 dark:text-purple-400 dark:hover:bg-gray-800"

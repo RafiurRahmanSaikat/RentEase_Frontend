@@ -1,11 +1,20 @@
-import { Clock, Heart, Home, LogOut, User } from "lucide-react";
+import { Clock, Edit, Heart, Home, LogOut, Plus, User } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Button from "../../components/ui/Button.jsx";
 import Card from "../../components/ui/Card.jsx";
+import Input from "../../components/ui/Input.jsx";
+import Modal from "../../components/ui/Modal.jsx";
+import Select from "../../components/ui/Select.jsx";
 import Spinner from "../../components/ui/Spinner.jsx";
+import Textarea from "../../components/ui/Textarea.jsx";
 import { getUserProfile, logout } from "../../services/authService";
+import {
+  createHouse,
+  getCategories,
+  updateHouse,
+} from "../../services/houseService";
 import {
   getFavorites,
   getRentRequests,
@@ -17,8 +26,21 @@ const UserDashboard = () => {
   const [rentRequests, setRentRequests] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState("");
+  const [selectedHouse, setSelectedHouse] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    location: "",
+    price: "",
+    images: "",
+    category_ids: [],
+  });
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Set active tab based on URL path
   useEffect(() => {
@@ -28,6 +50,8 @@ const UserDashboard = () => {
       setActiveTab("favorites");
     } else if (location.pathname === "/rent-requests") {
       setActiveTab("rentRequests");
+    } else if (location.pathname === "/my-houses") {
+      setActiveTab("myHouses");
     } else {
       setActiveTab("overview");
     }
@@ -38,16 +62,18 @@ const UserDashboard = () => {
       setLoading(true);
       try {
         // Use Promise.all to fetch data in parallel
-        const [userProfile, rentRequestsData, favoritesData] =
+        const [userProfile, rentRequestsData, favoritesData, categoriesData] =
           await Promise.all([
             getUserProfile(),
             getRentRequests(),
             getFavorites(),
+            getCategories(),
           ]);
 
         setUser(userProfile);
         setRentRequests(rentRequestsData?.results || []);
         setFavorites(favoritesData?.results || []);
+        setCategories(categoriesData?.results || []);
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
         toast?.error("Failed to load dashboard data");
@@ -62,6 +88,66 @@ const UserDashboard = () => {
   const handleLogout = () => {
     logout();
     window.location.href = "/login";
+  };
+
+  const openModal = (type, house = null) => {
+    setModalType(type);
+    setSelectedHouse(house);
+
+    if (type === "addHouse") {
+      setFormData({
+        title: "",
+        description: "",
+        location: "",
+        price: "",
+        images: "",
+        category_ids: [],
+      });
+    } else if (type === "editHouse") {
+      setFormData({
+        title: house.title,
+        description: house.description,
+        location: house.location,
+        price: house.price,
+        images: house.images,
+        category_ids: house.categories?.map((cat) => cat.id) || [],
+      });
+    }
+
+    setShowModal(true);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value, type } = e.target;
+
+    if (name === "category_ids") {
+      // Handle multi-select for categories
+      const selectedOptions = Array.from(e.target.selectedOptions, (option) =>
+        Number.parseInt(option.value),
+      );
+      setFormData({ ...formData, [name]: selectedOptions });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      if (modalType === "addHouse") {
+        await createHouse(formData);
+        toast?.success("House created successfully");
+      } else if (modalType === "editHouse") {
+        await updateHouse(selectedHouse.id, formData);
+        toast?.success("House updated successfully");
+      }
+
+      // Refresh data
+      // You would need to implement a function to fetch user's houses
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast?.error("Failed to submit form");
+    }
   };
 
   const renderTabContent = () => {
@@ -192,10 +278,7 @@ const UserDashboard = () => {
                         className="flex items-center rounded-lg border border-gray-200 p-3 dark:border-gray-700"
                       >
                         <img
-                          src={
-                            favorite.house?.images ||
-                            "https://i.ibb.co/VWgQBg65/house.jpg"
-                          }
+                          src={favorite.house?.images}
                           alt={favorite.house?.title}
                           className="mr-4 h-16 w-16 rounded-md object-cover"
                         />
@@ -315,10 +398,7 @@ const UserDashboard = () => {
                     <Card className="h-full transition-shadow duration-200 hover:shadow-lg">
                       <div className="relative h-40">
                         <img
-                          src={
-                            favorite.house?.images ||
-                            "https://i.ibb.co/VWgQBg65/house.jpg"
-                          }
+                          src={favorite.house?.images}
                           alt={favorite.house?.title}
                           className="h-full w-full rounded-t-lg object-cover"
                         />
@@ -358,6 +438,82 @@ const UserDashboard = () => {
                 No favorites yet.
               </p>
             )}
+          </Card>
+        );
+
+      case "myHouses":
+        return (
+          <Card>
+            <div className="mb-6 flex items-center justify-between">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                My Houses
+              </h3>
+              <Button onClick={() => openModal("addHouse")}>
+                <Plus size={18} className="mr-1" /> Add House
+              </Button>
+            </div>
+
+            {/* This would need to be implemented with actual user houses data */}
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {/* Sample house card - replace with actual data */}
+              <Card className="h-full transition-shadow duration-200 hover:shadow-lg">
+                <div className="relative h-40">
+                  <img
+                    src="https://i.ibb.co/VWgQBg65/house.jpg"
+                    alt="Sample House"
+                    className="h-full w-full rounded-t-lg object-cover"
+                  />
+                  <div className="absolute right-2 top-2">
+                    <button
+                      onClick={() =>
+                        openModal("editHouse", {
+                          id: 1,
+                          title: "Sample House",
+                          description: "A beautiful sample house",
+                          location: "New York",
+                          price: "150.00",
+                          images: "https://i.ibb.co/VWgQBg65/house.jpg",
+                          categories: [],
+                        })
+                      }
+                      className="rounded-full bg-neutral-50 p-1.5 text-blue-500 shadow-md transition-colors duration-200 hover:bg-blue-500 hover:text-white"
+                    >
+                      <Edit size={16} />
+                    </button>
+                  </div>
+                </div>
+                <div className="p-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="line-clamp-1 font-medium text-gray-900 dark:text-white">
+                      Sample House
+                    </h4>
+                    <span className="rounded-full bg-yellow-100 px-2 py-0.5 text-xs text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
+                      Pending
+                    </span>
+                  </div>
+                  <p className="line-clamp-1 text-sm text-gray-500 dark:text-gray-400">
+                    New York
+                  </p>
+                  <p className="mt-1 text-sm font-medium text-purple-600 dark:text-purple-400">
+                    $150.00 / day
+                  </p>
+                </div>
+              </Card>
+
+              {/* Empty state */}
+              <div className="col-span-full flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 p-8 text-center dark:border-gray-700">
+                <Home size={48} className="mb-2 text-gray-400" />
+                <h3 className="mb-1 text-lg font-medium text-gray-900 dark:text-white">
+                  No houses yet
+                </h3>
+                <p className="mb-4 text-gray-500 dark:text-gray-400">
+                  Add your first house listing to start renting it out
+                </p>
+                <Button onClick={() => openModal("addHouse")}>
+                  <Plus size={18} className="mr-1" /> Add House
+                </Button>
+              </div>
+            </div>
           </Card>
         );
 
@@ -452,7 +608,9 @@ const UserDashboard = () => {
             ? "My Rent Requests"
             : activeTab === "favorites"
               ? "My Favorites"
-              : "My Dashboard"}
+              : activeTab === "myHouses"
+                ? "My Houses"
+                : "My Dashboard"}
       </h1>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
@@ -470,6 +628,18 @@ const UserDashboard = () => {
               >
                 <Home size={18} className="mr-3" />
                 <span>Overview</span>
+              </Link>
+
+              <Link
+                to="/my-houses"
+                className={`flex w-full items-center rounded-lg px-4 py-3 transition-colors ${
+                  activeTab === "myHouses"
+                    ? "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400"
+                    : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                }`}
+              >
+                <Home size={18} className="mr-3" />
+                <span>My Houses</span>
               </Link>
 
               <Link
@@ -524,6 +694,78 @@ const UserDashboard = () => {
         {/* Main Content */}
         <div className="md:col-span-3">{renderTabContent()}</div>
       </div>
+
+      {/* House Modal */}
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title={modalType === "addHouse" ? "Add New House" : "Edit House"}
+        size="lg"
+      >
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Input
+            label="Title"
+            name="title"
+            value={formData.title}
+            onChange={handleInputChange}
+            placeholder="Enter house title"
+            required
+          />
+          <Input
+            label="Location"
+            name="location"
+            value={formData.location}
+            onChange={handleInputChange}
+            placeholder="Enter location"
+            required
+          />
+          <Input
+            label="Price"
+            name="price"
+            type="number"
+            value={formData.price}
+            onChange={handleInputChange}
+            placeholder="Enter price per day"
+            required
+          />
+          <Select
+            label="Categories"
+            name="category_ids"
+            value={formData.category_ids}
+            onChange={handleInputChange}
+            multiple
+            options={categories.map((cat) => ({
+              value: cat.id,
+              label: cat.name,
+            }))}
+          />
+        </div>
+        <Textarea
+          label="Description"
+          name="description"
+          value={formData.description}
+          onChange={handleInputChange}
+          placeholder="Enter house description"
+          className="mt-4"
+          required
+        />
+        <Input
+          label="Images (comma separated URLs)"
+          name="images"
+          value={formData.images}
+          onChange={handleInputChange}
+          placeholder="Enter image URLs separated by commas"
+          className="mt-4"
+        />
+        <div className="mt-6 flex justify-end space-x-2">
+          <Button variant="outline" onClick={() => setShowModal(false)}>
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit}>
+            {modalType === "addHouse" ? "Create House" : "Update House"}
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };
